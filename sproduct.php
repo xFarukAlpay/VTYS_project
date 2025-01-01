@@ -11,7 +11,7 @@ try {
 }
 
 try {
-    // `users` tablosundan en yüksek kullanıcı id'sini al
+    // users tablosundan en yüksek kullanıcı id'sini al
     $userSql = "SELECT TOP 1 user_id FROM users ORDER BY user_id DESC";
     $userStmt = $conn->query($userSql);
     $latestUser = $userStmt->fetch(PDO::FETCH_ASSOC);
@@ -28,7 +28,7 @@ try {
             $conn->beginTransaction();
 
             try {
-                // `Products` tablosuna ekleme
+                // Products tablosuna ekleme
                 $productSql = "INSERT INTO Products (product_name, price, size) 
                                OUTPUT INSERTED.product_id 
                                VALUES (:product_name, :price, :size)";
@@ -41,7 +41,7 @@ try {
                 // Eklenen ürünün ID'sini al
                 $productId = $productStmt->fetch(PDO::FETCH_ASSOC)['product_id'];
 
-                // `cart` tablosuna ekleme
+                // cart tablosuna ekleme
                 $cartSql = "INSERT INTO Cart (user_id, product_id, quantity, added_date) 
                             VALUES (:user_id, :product_id, :quantity, GETDATE())";
                 $cartStmt = $conn->prepare($cartSql);
@@ -50,10 +50,19 @@ try {
                 $cartStmt->bindParam(':quantity', $quantity);
                 $cartStmt->execute();
 
+                // orderdetails tablosuna ekleme
+                $orderDetailsSql = "INSERT INTO OrderDetails (user_id, product_id, quantity) 
+                                    VALUES (:user_id, :product_id, :quantity)";
+                $orderDetailsStmt = $conn->prepare($orderDetailsSql);
+                $orderDetailsStmt->bindParam(':user_id', $userId);
+                $orderDetailsStmt->bindParam(':product_id', $productId);
+                $orderDetailsStmt->bindParam(':quantity', $quantity);
+                $orderDetailsStmt->execute();
+
                 // İşlemleri onayla
                 $conn->commit();
 
-                echo "<script>alert('Ürün başarıyla sepete ve ürün tablosuna eklendi.');</script>";
+                echo "<script>alert('Ürün başarıyla sepete, ürün ve orderdetails tablolarına eklendi.');</script>";
             } catch (Exception $e) {
                 // Hata durumunda işlemleri geri al
                 $conn->rollBack();
@@ -71,7 +80,7 @@ try {
 <!DOCTYPE html>
 <html lang="tr">
 <!-- =================================================================================== -->
-<!--        Ana Sayfa   -->
+<!--      Ana Sayfa   -->
 <!-- =================================================================================== -->
 
 <head>

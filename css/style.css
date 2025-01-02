@@ -252,15 +252,12 @@ header {
   margin-bottom: 64px;
 }
 .pro-container {
-  /* display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 18px;
-  row-gap: 20px; */
   display: flex;
   justify-content: space-around;
   padding-left: 20px;
   flex-wrap: wrap;
 }
+
 #product1 .pro {
   width: 23%;
   min-width: 250px;
@@ -272,12 +269,16 @@ header {
   transition: 0.3s ease;
   margin-bottom: 20px;
 }
+
 #product1 .pro:hover {
   box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.09);
   scale: 1.02;
 }
+
 #product1 .pro img {
   width: 100%;
+  aspect-ratio: 4 / 3; /* En-boy oranını sabitler */
+  object-fit: cover; /* Resmi düzgün bir şekilde kırpar */
   border-radius: 20px;
 }
 
@@ -286,10 +287,12 @@ header {
   padding: 10px 0;
   position: relative;
 }
+
 #product1 .pro .des span {
   color: #606063;
   font-size: 12px;
 }
+
 #product1 .pro .des h5 {
   padding-top: 7px;
   font-size: 12px;
@@ -302,18 +305,18 @@ header {
   font-size: 14px;
   margin-bottom: 10px;
 }
+
 #product1 .pro .des h4 {
   font-size: 18px;
   font-weight: 700;
   color: #088178;
 }
+
 #product1 .pro .des .cart {
   width: 35px;
   height: 35px;
-  /* line-height: 30px; */
   border-radius: 50%;
   background-color: #e8f6ea;
-  /* font-weight: ; */
   color: #0a978e;
   border: 1px solid #cce7d0;
   position: absolute;
@@ -324,10 +327,12 @@ header {
   font-size: 16px;
   transition: 0.3s ease;
 }
+
 #product1 .pro .des .cart:hover {
   color: #e8f6ea;
   background: #088178;
 }
+
 /* ==============================*/
 /* ---------  Banner ----------- */
 /* =============================*/
